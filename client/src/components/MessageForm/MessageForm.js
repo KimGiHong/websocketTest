@@ -4,7 +4,7 @@ import { SocketContext, SOCKET_EVENT } from '../../service/socket';
 function MessageForm({nickname}){
   const [typingMessage, setTypingMessage] = useState("");
   const socket = useContext(SocketContext);
-
+  const [file, setFile] = useState("");
   const handleChangeTypingMessage = useCallback(e => {
     setTypingMessage(e.target.value);
   }, []);
@@ -16,32 +16,20 @@ function MessageForm({nickname}){
     if(noContent) {
       return;
     }
-
+    
     socket.emit(SOCKET_EVENT.SEND_MESSAGE, {
       nickname,
-      content: typingMessage
+      content: typingMessage,
     });
-    
+    socket.emit(SOCKET_EVENT.SEND_FILE, file && file.target.files[0].toString("utf8"))
     setTypingMessage("");
   }, [socket, nickname, typingMessage]);
-
-  const upload = (files) => {
-    let fileReader = new FileReader();
-    console.log(files.target.files[0])
-    socket.emit("upload", files.target.files[0], (status) => {
-      console.log(status);
-      fileReader.onload = () => {
-        console.log(fileReader.result);
-      }
-      fileReader.readAsText(files.target.files[0])
-    })
-  }
 
   return(
     <form>
       <div>
         <textarea maxLength={400} autoFocus value={typingMessage} onChange={handleChangeTypingMessage} />
-        <input type="file" onChange={upload}/>
+        <input type="file" onChange={setFile}/>
         <button onClick={handleSendMessage}>
            전송
         </button>

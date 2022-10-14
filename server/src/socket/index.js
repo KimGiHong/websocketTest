@@ -5,6 +5,7 @@ const SOCKET_EVENT = {
   UPDATE_NICKNAME: "UPDATE_NICKNAME",
   SEND_MESSAGE: "SEND_MESSAGE",
   RECEIVE_MESSAGE: "RECEIVE_MESSAGE",
+  SEND_FILE: "SEND_FILE"
 };
 
 module.exports = function (socketIo) {
@@ -30,14 +31,10 @@ module.exports = function (socketIo) {
       });
     });
     
-    socket.on("upload", (file, callback) => {
-      console.log(file.toString("utf8"));
-
-      // fs.writeFile("\s.txt", file, "utf8", (err) => {
-      //   callback({msg: err} ? err : "success")
-      // })
-
-    })
+    // socket.on("upload", (file) => {
+    //   // console.log(file.toString("utf8"));
+    //   socketIo.emit(SOCKET_EVENT.RECEIVE_MESSAGE, file)
+    // })
 
     socket.on("disconnect", reason => {
       console.log(`disconnect: ${reason}`);

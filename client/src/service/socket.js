@@ -11,13 +11,15 @@ export const SOCKET_EVENT = {
   UPDATE_NICKNAME: "UPDATE_NICKNAME",
   SEND_MESSAGE: "SEND_MESSAGE",
   RECEIVE_MESSAGE: "RECEIVE_MESSAGE",
+  SEND_FILE: "SEND_FILE"
 }
 
 export const makeMessage = pongData => {
-  const {prevNickname, nickname, content, type } = pongData;
+  const {prevNickname, nickname, content, fileTest, type } = pongData;
 
   let nicknameLabel;
   let connectLabel = "";
+  let fileLabel;
 
   switch(type){
     case SOCKET_EVENT.JOIN_ROOM: {
@@ -33,12 +35,17 @@ export const makeMessage = pongData => {
       nicknameLabel = nickname;
       break;
     }
+    case SOCKET_EVENT.SEND_FILE: {
+      fileLabel = fileTest;
+      break;
+    }
     default:
   }
 
   return{
     nickname: nicknameLabel,
     content: connectLabel,
+    fileTest: fileLabel
   }
 }
 
