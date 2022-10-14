@@ -26,9 +26,14 @@ function MessageForm({nickname}){
   }, [socket, nickname, typingMessage]);
 
   const upload = (files) => {
+    let fileReader = new FileReader();
     console.log(files.target.files[0])
     socket.emit("upload", files.target.files[0], (status) => {
       console.log(status);
+      fileReader.onload = () => {
+        console.log(fileReader.result);
+      }
+      fileReader.readAsText(files.target.files[0])
     })
   }
 

@@ -26,14 +26,17 @@ module.exports = function (socketIo) {
           type,
         };
         socketIo.to(roomName).emit(SOCKET_EVENT.RECEIVE_MESSAGE, responseData);
+        console.log(responseData)
       });
     });
+    
     socket.on("upload", (file, callback) => {
       console.log(file.toString("utf8"));
 
-      fs.writeFile("\s", file, "utf8", (err) => {
-        callback({message: err} ? err : "success")
-      })
+      // fs.writeFile("\s.txt", file, "utf8", (err) => {
+      //   callback({msg: err} ? err : "success")
+      // })
+
     })
 
     socket.on("disconnect", reason => {
