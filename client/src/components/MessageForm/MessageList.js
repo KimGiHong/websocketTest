@@ -29,7 +29,7 @@ function MessageList() {
       socket.off(SOCKET_EVENT.RECEIVE_MESSAGE, handleReceiveMessage);
     };
   }, [socket, handleReceiveMessage]);
-  console.log(messages);
+
   return(
     <div ref={chatWindow}>
       {messages.map((message, index) => {

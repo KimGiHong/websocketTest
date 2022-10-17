@@ -1,13 +1,13 @@
 import React from 'react'
 
 function MessageItem({message}) {
-  const { nickname, content, fileTest } = message;
-
+  const { nickname, content, file, fileName } = message;
+  console.log()
   return(
     <div>
       {nickname && <div>{nickname}: </div>}
       <div>{content}</div>
-      <div>{fileTest}</div>
+      {file.length !== 0 && file[0].includes("data:image") ? <img src={file}/> : <a href={file} download={fileName}>{fileName}</a>}
     </div>
   )
 }

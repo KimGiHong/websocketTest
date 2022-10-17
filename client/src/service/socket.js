@@ -11,15 +11,14 @@ export const SOCKET_EVENT = {
   UPDATE_NICKNAME: "UPDATE_NICKNAME",
   SEND_MESSAGE: "SEND_MESSAGE",
   RECEIVE_MESSAGE: "RECEIVE_MESSAGE",
-  SEND_FILE: "SEND_FILE"
 }
 
 export const makeMessage = pongData => {
-  const {prevNickname, nickname, content, fileTest, type } = pongData;
-
+  const {prevNickname, nickname, content, file, fileName, type } = pongData;
   let nicknameLabel;
   let connectLabel = "";
-  let fileLabel;
+  let fileLabel = [];
+  let testLabel = "";
 
   switch(type){
     case SOCKET_EVENT.JOIN_ROOM: {
@@ -33,10 +32,8 @@ export const makeMessage = pongData => {
     case SOCKET_EVENT.SEND_MESSAGE: {
       connectLabel = String(content);
       nicknameLabel = nickname;
-      break;
-    }
-    case SOCKET_EVENT.SEND_FILE: {
-      fileLabel = fileTest;
+      fileLabel = file;
+      testLabel = fileName;
       break;
     }
     default:
@@ -45,7 +42,8 @@ export const makeMessage = pongData => {
   return{
     nickname: nicknameLabel,
     content: connectLabel,
-    fileTest: fileLabel
+    file: fileLabel,
+    fileName: testLabel
   }
 }
 
